@@ -8,12 +8,15 @@ namespace JS.CharacterStats
     [Serializable]
     public class CharacterStats
     {
+        // Base value of the character stat
         public float BaseValue;
 
+        // Calculated value of the character stat
         public float Value
         {
             get
             {
+                // Recalculate the value if there are changes or the base value has changed
                 if (isChanges || BaseValue != lastBaseValue)
                 {
                     //Debug.Log("Calculating the final value");
@@ -25,25 +28,27 @@ namespace JS.CharacterStats
             }
         }
 
-        protected bool isChanges = true;
-        protected float _value;
-        protected float lastBaseValue = float.MinValue;
+        protected bool isChanges = true; // Flag to indicate if there are changes
+        protected float _value; // Cached value of the stat
+        protected float lastBaseValue = float.MinValue; // Last base value to detect changes
 
-        protected readonly List<StatModifiers> statModifiers;
-        public readonly ReadOnlyCollection<StatModifiers> StatModifiers;
+        protected readonly List<StatModifiers> statModifiers; // List of stat modifiers
+        public readonly ReadOnlyCollection<StatModifiers> StatModifiers; // Read-only collection of stat modifiers
 
+        // Default constructor
         public CharacterStats()
         {
             statModifiers = new List<StatModifiers>();
             StatModifiers = statModifiers.AsReadOnly();
         }
 
+        // Constructor with base value
         public CharacterStats(float baseValue) : this()
         {
             BaseValue = baseValue;
-
         }
 
+        // Add a modifier to the stat
         public virtual void AddModifier(StatModifiers modifier)
         {
             isChanges = true;
@@ -52,6 +57,7 @@ namespace JS.CharacterStats
             // Debug.Log("Modifier Added: " + modifier.Value);
         }
 
+        // Remove a modifier from the stat
         public virtual bool RemoveModifier(StatModifiers modifier)
         {
             if (statModifiers.Remove(modifier))
@@ -62,6 +68,7 @@ namespace JS.CharacterStats
             return false;
         }
 
+        // Remove all modifiers from a specific source
         public virtual bool RemoveAllModifiersFromSource(object source)
         {
             bool wasRemoved = false;
@@ -81,7 +88,7 @@ namespace JS.CharacterStats
             return wasRemoved;
         }
 
-        // compares the stats base statType and applies the buff in the correct order
+        // Compare the order of two stat modifiers
         // Flat -> PercentAdd -> PercentMult
         protected virtual int CompareModifierOrder(StatModifiers a, StatModifiers b)
         {
@@ -96,12 +103,13 @@ namespace JS.CharacterStats
             return 0;
         }
 
-        // Calculating the final value of the stat
+        // Calculate the final value of the stat
         protected virtual float CalculateFinalValue()
         {
             float finalValue = BaseValue;
             float sumPercentAdd = 0;
 
+            // Iterate through each modifier and apply it to the final value
             for (int i = 0; i < statModifiers.Count; i++)
             {
                 StatModifiers modifier = statModifiers[i];
