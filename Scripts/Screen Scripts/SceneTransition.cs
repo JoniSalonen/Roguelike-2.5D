@@ -22,11 +22,7 @@ public class SceneTransition : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Stop playing the game in the Unity Editor
-#else
         Application.Quit(); // Quit the application
-#endif
     }
 }
 

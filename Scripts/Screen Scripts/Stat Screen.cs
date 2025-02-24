@@ -59,14 +59,9 @@ public class StatScreen : MonoBehaviour
     private float money; // Current money value
 
     private bool isMSMax = false; // Flag indicating if movement speed is at its maximum
-    private bool isASMax = false; // Flag indicating if attack speed is at its maximum
-    private bool isDmgMax = false; // Flag indicating if attack damage is at its maximum
-    private bool isLifeMax = false; // Flag indicating if life is at its maximum
-    private bool isLifeRegenMax = false; // Flag indicating if life regeneration is at its maximum
     private bool isArmourMax = false; // Flag indicating if armor is at its maximum
     private bool isCritChanceMax = false; // Flag indicating if critical hit chance is at its maximum
-    private bool isCritMultMax = false; // Flag indicating if critical hit multiplier is at its maximum
-    private bool isLSMax = false; // Flag indicating if life steal is at its maximum
+
 
 
 
@@ -92,8 +87,8 @@ public class StatScreen : MonoBehaviour
         lifeSteal.text = "LifeSteal: " + lifeLeech;
         attDmg.text = "Damage: " + attackDmg;
         health.text = "Life: " + life;
-        healthRegen.text = "Life Regen: " + lifeRegen;
-        armour.text = "Armour: " + armor;
+        healthRegen.text = "Life Regen: " + lifeRegen + "Life/s";
+        armour.text = "Armour: " + armor + "%";
         critMult.text = "Mult: " + (100 + (critMultiplier * 100)) + "%";
         critChance.text = "Chance: " + crit + "%";
         movementsSpeed.text = "Movement Speed: " + movement;
@@ -110,38 +105,15 @@ public class StatScreen : MonoBehaviour
             movement = 5.0f;
             isMSMax = true;
         }
-        if (attackSpeed >= 100 || isASMax == false)
-        {
-            attackSpeed = 100;
-            isASMax = true;
-        }
-        if (lifeLeech < 100 && isLSMax == false)
-        {
-            isLSMax = true;
-        }
-        if (attackDmg >= 100 && isDmgMax == false)
-        {
-            isDmgMax = true;
-        }
-        if (armor >= 100 && isArmourMax == false)
+        if (armor >= 95 && isArmourMax == false)
         {
             isArmourMax = true;
         }
-        if (life >= 100 && isLifeMax == false)
-        {
-            isLifeMax = true;
-        }
-        if (lifeRegen >= 100 && isLifeRegenMax == false)
-        {
-            isLifeRegenMax = true;
-        }
+       
         if (crit >= 100 && isCritChanceMax == false)
         {
             isCritChanceMax = true;
         }
-        if (critMultiplier >= 100 && isCritMultMax == false)
-        {
-            isCritMultMax = true;
-        }
+        
     }
 }

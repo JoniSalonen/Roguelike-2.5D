@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private TriggerCheck triggerCheck;
 
+    public SpriteRenderer weapon;
+
     // Awake is called when the script instance is being loaded
     void Awake()
     {
@@ -70,6 +72,7 @@ public class PlayerController : MonoBehaviour
         tab.action.performed -= OpenTab;
         interact.action.performed -= OpenShop;
     }
+
 
     private void OpenShop(InputAction.CallbackContext obj)
     {
@@ -110,11 +113,22 @@ public class PlayerController : MonoBehaviour
         // Move the Rigidbody to the new position
         rb.MovePosition(newPosition);
 
-        // Update animator parameters based on movement input
-        animator.SetFloat("Speed_Up", -moveZ);
-        animator.SetFloat("Speed_Down", moveZ);
-        animator.SetFloat("Speed_Right", moveX);
-        animator.SetFloat("Speed_Left", -moveX);
+        if(moveZ != 0 || moveX != 0)
+        {
+            animator.SetBool("Moving", true);
+            weapon.enabled = true;
+        }
+        else
+        {
+            weapon.enabled = false;
+            animator.SetBool("Moving", false);   
+        }
+
+        //// Update animator parameters based on movement input
+        //animator.SetFloat("Speed_Up", -moveZ);
+        //animator.SetFloat("Speed_Down", moveZ);
+        //animator.SetFloat("Speed_Right", moveX);
+        //animator.SetFloat("Speed_Left", -moveX);
     }
 
     // Get the current pointer position
