@@ -39,8 +39,6 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
-
-
     public void AddLoadProgress()
     {
         loadProgress += 1;
@@ -57,6 +55,18 @@ public class LoadingScreen : MonoBehaviour
     {
         slider.maxValue = MaxLoad;
         maxLoad = MaxLoad;
+    }
+
+    public bool PermissionToSpawn() 
+    {
+        if (loadCompleted)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

@@ -31,6 +31,11 @@ public class WeaponParent : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        attackCooldown = (1 / c.AttackSpeed.Value);
+    }
+
 
     public void Attack()
     {
@@ -38,14 +43,11 @@ public class WeaponParent : MonoBehaviour
         if (attackBlocked)
             return;
 
-        attackCooldown = (1 / c.AttackSpeed.Value);
-
-        animator.SetTrigger("Attack");
+        animator.SetBool("Attack", true);
         hit = Damage();
         Leech(hit);
-
+        
         attackBlocked = true;
-
         StartCoroutine(DelayAttack());
 
     }
@@ -53,8 +55,12 @@ public class WeaponParent : MonoBehaviour
     private IEnumerator DelayAttack()
     {
         yield return new WaitForSeconds(attackCooldown);
-        Debug.Log("Attack Cooldown" + attackCooldown);
         attackBlocked = false;
+    }
+
+    public void StopAttack()
+    {
+        animator.SetBool("Attack", false);
     }
 
     public float Damage()

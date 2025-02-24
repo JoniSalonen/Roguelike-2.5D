@@ -21,8 +21,8 @@ namespace JS.timer
             currentTime += Time.deltaTime;
 
             // Calculate the time multiplier by dividing the current time by 60
-            // enemies gaining multiplier every 60 seconds
-            timeMultiplier = ((int)currentTime / 60); 
+            // enemies gaining multiplier every 75 seconds
+            timeMultiplier = ((int)currentTime / 75); 
 
         }
 

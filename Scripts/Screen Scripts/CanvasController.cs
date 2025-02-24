@@ -23,7 +23,6 @@ public class CanvasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Shows Pause Menu when Escape is pressed
         if (Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
         {
@@ -32,6 +31,8 @@ public class CanvasController : MonoBehaviour
             stats.enabled = false;
             Time.timeScale = 0;
             isPaused = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isPaused == true)
         {
@@ -39,12 +40,8 @@ public class CanvasController : MonoBehaviour
             isPaused = false;
             Time.timeScale = 1;
             pauseMenu.enabled = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
-
     }
-
-
-
-
-
 }

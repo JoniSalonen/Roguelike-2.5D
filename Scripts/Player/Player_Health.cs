@@ -113,7 +113,7 @@ public class PlayerHealth : MonoBehaviour
             realDamage = damage;
         }
 
-        Debug.Log("Real Damage: " + realDamage);
+        // Debug.Log("Real Damage: " + realDamage);
         currentHealth -= realDamage;
 
         // Check if player health has dropped to zero or below
@@ -138,6 +138,8 @@ public class PlayerHealth : MonoBehaviour
         pauseMenuScreen.enabled = false;
         // Enable death screen
         deathScreen.enabled = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         // Pause the game
         Time.timeScale = 0;
     }

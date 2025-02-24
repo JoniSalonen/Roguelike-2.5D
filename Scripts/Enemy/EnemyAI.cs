@@ -85,12 +85,15 @@ public class EnemyAI : MonoBehaviour
 
         // If the distance to the player is greater than the attack range then chase the player
         if (distanceToPlayer >= attackRange)
-        {
+        {  
             ChasePlayer();
+            animator.SetBool("Attacking", false);
         }
         else
         {
+            animator.SetBool("Attacking", true);
             AttackPlayer();
+            
         }
     }
 
@@ -109,7 +112,7 @@ public class EnemyAI : MonoBehaviour
     // Attacking the player
     public void AttackPlayer()
     {
-        Debug.Log("Attacking Player");
+        //Debug.Log("Attacking Player");
         // If the attack is blocked then return
         if (attackBlocked)
             return;
@@ -117,15 +120,16 @@ public class EnemyAI : MonoBehaviour
         attackCooldown = 1;
 
         // animator.SetTrigger("Attack");
+        
 
-        // Getting the damage value
         hit = Damage();
-        Debug.Log("Enemy Hit: " + hit);
+
+        
 
         // Checking if the player is in the attack area
         foreach (Collider col in Physics.OverlapSphere(circleOrigin.position, circleRadius))
         {
-            Debug.Log(col.name);
+           // Debug.Log(col.name);
 
             PlayerHealth health;
 
@@ -137,6 +141,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         attackBlocked = true;
+        
 
         StartCoroutine(DelayAttack());
     }
@@ -145,7 +150,6 @@ public class EnemyAI : MonoBehaviour
     {
         // Wait for the attack cooldown
         yield return new WaitForSeconds(attackCooldown);
-        Debug.Log("Attack Cooldown: " + attackCooldown);
         attackBlocked = false;
     }
 
@@ -200,7 +204,6 @@ public class EnemyAI : MonoBehaviour
             if (enemyMulti != null)
             {
                 enemyMult = enemyMulti.GetComponent<EnemyMultiplier>().GetMultiplier(colliderName);
-                Debug.Log("enemy mult: " + enemyMult);
             }
         }
         else

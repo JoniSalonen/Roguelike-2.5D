@@ -1,11 +1,7 @@
 using JS.CharacterStats;
 using JS.Inventory;
 using ShopItems;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -240,7 +236,7 @@ public class Shop : MonoBehaviour
     public void BuyMovementItem()
     {
         // Calculate the current price of the movement speed item
-        int currentPrice = originalPriceMS + (inventory.movementSpeedItem * 20);
+        int currentPrice = originalPriceMS + (inventory.movementSpeedItem * originalPriceMS);
         int coins = inventory.coins;
         amountMS = inventory.movementSpeedItem;
 
@@ -295,7 +291,7 @@ public class Shop : MonoBehaviour
     public void BuyAttackSpeedItem()
     {
         // Calculate the current price of the attack speed item
-        int currentPrice = originalPriceAS + (inventory.AttackSpeedItem * 5);
+        int currentPrice = originalPriceAS + (inventory.AttackSpeedItem * originalPriceAS);
         int coins = inventory.coins;
         amountAS = inventory.AttackSpeedItem;
 
@@ -350,7 +346,7 @@ public class Shop : MonoBehaviour
     public void BuyArmourItem()
     {
         // Calculate the current price of the armor item
-        int currentPrice = originalPriceArmour + (inventory.ArmourItem * 5);
+        int currentPrice = originalPriceArmour + (inventory.ArmourItem * originalPriceArmour);
         int coins = inventory.coins;
         amountArmour = inventory.ArmourItem;
 
@@ -406,7 +402,7 @@ public class Shop : MonoBehaviour
     public void BuyCritChanceItem()
     {
         // Calculate the current price of the crit chance item
-        int currentPrice = originalPriceCritC + (inventory.CritChanceItem * 5);
+        int currentPrice = originalPriceCritC + (inventory.CritChanceItem * originalPriceCritC);
         int coins = inventory.coins;
         amountCritC = inventory.CritChanceItem;
 
@@ -461,7 +457,7 @@ public class Shop : MonoBehaviour
     public void BuyCritMultItem()
     {
         // Calculate the current price of the crit multiplier item
-        int currentPrice = originalPriceCritM + (inventory.CritMultItem * 5);
+        int currentPrice = originalPriceCritM + (inventory.CritMultItem * originalPriceCritM);
         int coins = inventory.coins;
         amountCritM = inventory.CritMultItem;
 
@@ -516,7 +512,7 @@ public class Shop : MonoBehaviour
     public void BuyDamageItem()
     {
         // Calculate the current price of the damage item
-        int currentPrice = originalPriceDmg + (inventory.DamageItem * 5);
+        int currentPrice = originalPriceDmg + (inventory.DamageItem * originalPriceDmg);
         int coins = inventory.coins;
         amountDmg = inventory.DamageItem;
 
@@ -571,7 +567,7 @@ public class Shop : MonoBehaviour
     public void BuyHealthItem()
     {
         // Calculate the current price of the health item
-        int currentPrice = originalPriceHp + (inventory.lifeItem * 5);
+        int currentPrice = originalPriceHp + (inventory.lifeItem * originalPriceHp);
         int coins = inventory.coins;
         amountHp = inventory.lifeItem;
 
@@ -626,7 +622,7 @@ public class Shop : MonoBehaviour
     public void BuyHealthRegenItem()
     {
         // Calculate the current price of the health regen item
-        int currentPrice = originalPriceHpReg + (inventory.LifeRegenItem * 5);
+        int currentPrice = originalPriceHpReg + (inventory.LifeRegenItem * originalPriceHpReg);
         int coins = inventory.coins;
         amountHpReg = inventory.LifeRegenItem;
 
@@ -681,7 +677,7 @@ public class Shop : MonoBehaviour
     public void BuyLifeStealItem()
     {
         // Calculate the current price of the life steal item
-        int currentPrice = originalPriceLifeSteal + (inventory.LifeSteal * 5);
+        int currentPrice = originalPriceLifeSteal + (inventory.LifeSteal * originalPriceLifeSteal);
         int coins = inventory.coins;
         amountLifeSteal = inventory.LifeSteal;
 

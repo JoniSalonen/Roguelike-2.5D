@@ -34,8 +34,12 @@ public class EnemyHealth : MonoBehaviour
     [Header("Enemy Multiplier")]
     public float enemyMult;
 
+    public Animator animator;
+
     // Reference to the player's inventory
     private Inventory inventory;
+
+    private EnemyAI enemyAI;
 
     // Reference to the enemy stats object
     private GameObject enemyStats;
@@ -51,6 +55,7 @@ public class EnemyHealth : MonoBehaviour
         enemyStats = GameObject.Find("EnemyScaler");
         inventory = GameObject.Find("Player_Controller").GetComponent<Inventory>();
         enemyMulti = GameObject.Find("EnemyMultiplier");
+        enemyAI = GetComponent<EnemyAI>();
 
         CheckCollider();
 
@@ -78,7 +83,7 @@ public class EnemyHealth : MonoBehaviour
             if (enemyMulti != null)
             {
                 enemyMult = enemyMulti.GetComponent<EnemyMultiplier>().GetMultiplier(colliderName);
-                Debug.Log("enemy mult: " + enemyMult);
+                // Debug.Log("enemy mult: " + enemyMult);
             }
         }
         else
@@ -94,7 +99,7 @@ public class EnemyHealth : MonoBehaviour
         // If the enemy is already dead, destroy the game object
         if (isDead)
         {
-            Destroy(gameObject);
+            StartCoroutine(DeathAnimation());
             return;
         }
 
@@ -117,8 +122,16 @@ public class EnemyHealth : MonoBehaviour
             // If the enemy is dead, invoke the hit event, update inventory, and destroy the game object
             OnHitWithReference?.Invoke(sender);
             isDead = true;
-            inventory.coins += coins;
-            Destroy(gameObject);
+            StartCoroutine(DeathAnimation()); 
         }
+    }
+
+    IEnumerator DeathAnimation()
+    {
+        Destroy(enemyAI);
+        animator.SetBool("Death", true);
+        yield return new WaitForSeconds(3);
+        inventory.coins += coins;
+        Destroy(gameObject);
     }
 }

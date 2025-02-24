@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Arrays for Enemies")]
@@ -36,17 +37,20 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawning Flags")]
     private bool isSpawning; 
-    private bool spawningElites; 
+    private bool spawningElites;
+
+    private bool loadCompleted = false;
 
     void Start()
     {
+        
         // Start spawning enemy waves
-        StartCoroutine(SpawnEnemyWave(waveCount));
+        DelaySpawn();
 
         // Set the initial values for regular enemies
         isSpawning = false;
         waveCount = 0;
-        maxEnemyCount = 1;
+        maxEnemyCount = 3;
         spawnAmount = maxEnemyCount;
 
         // Set the initial values for elite enemies
@@ -56,37 +60,45 @@ public class EnemySpawner : MonoBehaviour
         elitesToSpawn = 0;
 
         // Set the spawn time and delay for each wave of enemies
-        spawnTime = 3;
+        spawnTime = 5;
         spawnDelay = 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Update the enemy count
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
-        // Check if all enemies are defeated and not currently spawning
-        if (enemyCount == 0 && !isSpawning)
+        if (loadCompleted)
         {
-            // Check if the current wave count is less than or equal to the maximum enemy count
-            if (waveCount <= maxEnemyCount)
-            {
-                // Increase the wave count, maximum enemy count, elite chance, and spawn amount
-                waveCount++;
-                maxEnemyCount += 1;
-                eliteChance += 1;
-                spawnAmount = maxEnemyCount;
+            // Update the enemy count
+            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-                // Spawn the enemies
-                SpawnEnemies();
-            }
-            // Check if the maximum enemy count has reached 25
-            else if (maxEnemyCount == 25)
+            // Check if all enemies are defeated and not currently spawning
+            if (enemyCount == 0 && !isSpawning)
             {
-                // Spawn the enemies
-                SpawnEnemies();
+                // Check if the current wave count is less than or equal to the maximum enemy count
+                if (waveCount <= maxEnemyCount)
+                {
+                    // Increase the wave count, maximum enemy count, elite chance, and spawn amount
+                    waveCount++;
+                    maxEnemyCount += 1;
+                    eliteChance += 1;
+                    spawnAmount = maxEnemyCount;
+
+                    // Spawn the enemies
+                    SpawnEnemies();
+                }
+                // Check if the maximum enemy count has reached 25
+                else if (maxEnemyCount == 25)
+                {
+                    // Spawn the enemies
+                    SpawnEnemies();
+                }
             }
+        }
+        else
+        {
+            loadCompleted = GameObject.Find("LoadingScreen").GetComponent<LoadingScreen>().PermissionToSpawn();
+            DelaySpawn();
         }
     }
 
@@ -192,5 +204,13 @@ public class EnemySpawner : MonoBehaviour
 
         yield return new WaitForSeconds(spawnDelay);
         isSpawning = false;
+    }
+
+    private void DelaySpawn()
+    {
+        if (loadCompleted)
+        {
+            StartCoroutine(SpawnEnemyWave(waveCount));
+        }
     }
 }

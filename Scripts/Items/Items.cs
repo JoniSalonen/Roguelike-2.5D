@@ -147,7 +147,7 @@ namespace ShopItems
         // Adds a health regeneration modifier to the character
         public void AddItem(Character c)
         {
-            c.LifeRegen.AddModifier(new StatModifiers(10, StatType.Flat, this));
+            c.LifeRegen.AddModifier(new StatModifiers(1, StatType.Flat, this));
 
         }
 
